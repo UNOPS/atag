@@ -1,8 +1,7 @@
-﻿namespace ATag.Core.Model
+﻿namespace ATag.Core
 {
     using System;
     using System.Collections.Generic;
-    using ATag.Core.Helper;
 
     public class Tag
     {
@@ -46,7 +45,7 @@
 
             if (string.IsNullOrWhiteSpace(name) || name.Trim().Length < 1)
             {
-                throw new Exception("Tag's name cannot be an empty string.");
+                throw new TagException("Tag's name cannot be an empty string.");
             }
 
             this.Name = name;

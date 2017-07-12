@@ -2,19 +2,34 @@
 {
     using System;
     using System.Linq;
-    using ATag.Core.Helper;
+    using ATag.Core;
+    using LinqKit;
     using Microsoft.EntityFrameworkCore;
 
     internal static class Extensions
     {
         public static void AddConfiguration<TEntity>(
             this ModelBuilder modelBuilder,
-            DbEntityConfiguration<TEntity> entityConfiguration) where TEntity : class
+            DbEntityConfiguration<TEntity> entityConfiguration, string schema) where TEntity : class
         {
-            modelBuilder.Entity<TEntity>(entityConfiguration.Configure);
+            modelBuilder.Entity<TEntity>(entity => entityConfiguration.Configure(entity, schema));
         }
 
-        public static PaginatedData<T> Paginate<T>(
+        public static IQueryable<Tag> BelongingTo(this IQueryable<Tag> queryable, params TagOwnerFilter[] filters)
+        {
+            var filter = PredicateBuilder.New<Tag>(true);
+
+            foreach (var recipient in filters)
+            {
+                filter = filter.Or(t => t.OwnerType == recipient.OwnerType && t.OwnerId == recipient.OwnerId);
+            }
+
+            return queryable
+                .AsExpandable()
+                .Where(filter);
+        }
+
+        public static PagedEntity<T> WithPaging<T>(
             this IQueryable<T> query,
             int pageNum,
             int pageSize)
@@ -36,7 +51,7 @@
             //Calculate number of rows to skip on page size
             var excludedRows = (pageNum - 1) * pageSize;
 
-            return new PaginatedData<T>
+            return new PagedEntity<T>
             {
                 Results = query.Skip(excludedRows).Take(Math.Min(pageSize, rowsCount)).ToArray(),
                 TotalCount = rowsCount

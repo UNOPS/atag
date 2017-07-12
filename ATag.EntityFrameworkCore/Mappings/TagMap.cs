@@ -1,6 +1,6 @@
 ﻿namespace ATag.EntityFrameworkCore.Mappings
 {
-    using ATag.Core.Model;
+    using ATag.Core;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,9 +8,9 @@
     {
         private const string IndexName = "IX_Tag_OwnerType_OwnerId";
 
-        public override void Configure(EntityTypeBuilder<Tag> entity)
+        public override void Configure(EntityTypeBuilder<Tag> entity, string schema)
         {
-            entity.ToTable("Tag");
+            entity.ToTable("Tag", schema);
             entity.HasKey(t => t.Id);
             entity.Property(t => t.Id).HasColumnName("Id").UseSqlServerIdentityColumn();
             entity.Property(t => t.Name).HasColumnName("Name").HasMaxLength(Tag.NameMaxLength).IsUnicode(false);
@@ -21,7 +21,6 @@
             entity.Property(t => t.DateModified).HasColumnName("DateModified");
             entity.Property(t => t.IsDeleted).HasColumnName("IsDeleted");
             entity.Property(t => t.ModifiedByUserId).HasColumnName("ModifiedByUserId");
-
             entity.HasIndex(IndexName);
         }
     }

@@ -1,7 +1,6 @@
-﻿namespace ATag.Core.Model
+﻿namespace ATag.Core
 {
     using System;
-    using ATag.Core.Helper;
 
     public class TaggedEntity
     {
@@ -40,7 +39,7 @@
 
             if (string.IsNullOrWhiteSpace(comment) || comment.Trim().Length < 1)
             {
-                throw new Exception("Tag's comment cannot be an empty string.");
+                throw new TagException("Tag's comment cannot be an empty string.");
             }
 
             if (this.TagComment == null)

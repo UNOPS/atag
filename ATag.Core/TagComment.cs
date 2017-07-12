@@ -1,7 +1,6 @@
-﻿namespace ATag.Core.Model
+﻿namespace ATag.Core
 {
     using System;
-    using ATag.Core.Helper;
 
     public class TagComment
     {

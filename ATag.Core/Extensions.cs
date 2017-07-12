@@ -1,19 +1,19 @@
-﻿namespace ATag.Core.Helper
+﻿namespace ATag.Core
 {
     using System;
     using System.Linq;
 
-    public static class Extensions
+    internal static class Extensions
     {
         public static void EnforceMaxLength(this string value, int maxLength)
         {
             if (value?.Length > maxLength)
             {
-                throw new Exception($"String exceeds max length of {maxLength}.");
+                throw new TagException($"String exceeds max length of {maxLength}.");
             }
         }
 
-        public static PaginatedData<T> Paginate<T>(
+        public static PagedEntity<T> WithPaging<T>(
             this IQueryable<T> query,
             int pageNum,
             int pageSize)
@@ -35,7 +35,7 @@
             //Calculate number of rows to skip on page size
             var excludedRows = (pageNum - 1) * pageSize;
 
-            return new PaginatedData<T>
+            return new PagedEntity<T>
             {
                 Results = query.Skip(excludedRows).Take(Math.Min(pageSize, rowsCount)).ToArray(),
                 TotalCount = rowsCount
