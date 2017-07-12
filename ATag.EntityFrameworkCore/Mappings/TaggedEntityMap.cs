@@ -21,8 +21,7 @@
             entity.Property(t => t.EntityKey).HasColumnName("EntityKey").HasMaxLength(EntityKeyMaxLength).IsUnicode(false);
             entity.Property(t => t.TagId).HasColumnName("TagId");
             entity.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
-            entity.HasOne(t => t.TagData).WithMany(t => t.TaggedEntities).HasForeignKey(t => t.TagId);
-            entity.HasOne(t => t.TagComment).WithOne(t => t.TaggedEntityData).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
+            entity.HasOne(t => t.TagComment).WithOne(t => t.TaggedEntityData).HasForeignKey<TagComment>(t => t.TaggedEntityDataId);
         }
     }
 }

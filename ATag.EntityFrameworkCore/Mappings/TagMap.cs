@@ -6,8 +6,6 @@
 
     public class TagMap : DbEntityConfiguration<Tag>
     {
-        private const string IndexName = "IX_Tag_OwnerType_OwnerId";
-
         public override void Configure(EntityTypeBuilder<Tag> entity, string schema)
         {
             entity.ToTable("Tag", schema);
@@ -21,7 +19,7 @@
             entity.Property(t => t.DateModified).HasColumnName("DateModified");
             entity.Property(t => t.IsDeleted).HasColumnName("IsDeleted");
             entity.Property(t => t.ModifiedByUserId).HasColumnName("ModifiedByUserId");
-            entity.HasIndex(IndexName);
+            entity.HasMany(t => t.TaggedEntities).WithOne(t => t.TagData).HasForeignKey(t => t.TagId);
         }
     }
 }

@@ -9,17 +9,16 @@
         private const string DefaultConnectionString =
             "Server=(localdb)\\mssqllocaldb;Database=tag;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        private readonly string schema;
+        private const string Schema = "tag";
 
-        public TagsDbContext(string schema)
+        public TagsDbContext()
             : base(new DbContextOptionsBuilder().UseSqlServer(DefaultConnectionString).Options)
         {
-            this.schema = schema;
+
         }
 
-        public TagsDbContext(DbContextOptions options, string schema) : base(options)
+        public TagsDbContext(DbContextOptions options) : base(options)
         {
-            this.schema = schema;
         }
 
         public virtual DbSet<Tag> Tags { get; set; }
@@ -31,9 +30,9 @@
 
             builder.HasDefaultSchema("tag");
 
-            builder.AddConfiguration(new TagMap(), this.schema);
-            builder.AddConfiguration(new TaggedEntityMap(), this.schema);
-            builder.AddConfiguration(new TagCommentMap(), this.schema);
+            builder.AddConfiguration(new TagMap(), Schema);
+            builder.AddConfiguration(new TaggedEntityMap(), Schema);
+            builder.AddConfiguration(new TagCommentMap(), Schema);
         }
     }
 }

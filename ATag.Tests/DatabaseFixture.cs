@@ -24,7 +24,7 @@
 
         public DataContext CreateDataContext()
         {
-            return new DataContext(this.options, this.schema);
+            return new DataContext(this.options);
         }
     }
 }

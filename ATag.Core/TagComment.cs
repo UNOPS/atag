@@ -21,6 +21,7 @@
         public DateTime? DateModified { get; set; }
         public int Id { get; set; }
         public int? ModifiedByUserId { get; set; }
+        public int TaggedEntityDataId { get; set; }
         public virtual TaggedEntity TaggedEntityData { get; set; }
 
         public void Edit(string comment, int userId)
