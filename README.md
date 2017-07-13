@@ -41,15 +41,15 @@ CREATE TABLE [dbo].[TaggedEntity] (
 
 GO
 
-CREATE TABLE [dbo].[TagComment] (
+CREATE TABLE [dbo].[TagNote] (
     [Id] int NOT NULL,
-    [Comment] nvarchar(1000),
     [CreatedByUserId] int NOT NULL,
     [DateCreated] datetime2 NOT NULL,
     [ModifiedByUserId] int,
     [DateModified] datetime2,
-    CONSTRAINT [PK_TagComment] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_TagComment_TaggedEntity_Id] FOREIGN KEY ([Id]) REFERENCES [dbo].[TaggedEntity] ([Id]) ON DELETE CASCADE
+    [Note] nvarchar(1000),
+    CONSTRAINT [PK_TagNote] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_TagNote_TaggedEntity_Id] FOREIGN KEY ([Id]) REFERENCES [dbo].[TaggedEntity] ([Id]) ON DELETE CASCADE
 );
 
 GO

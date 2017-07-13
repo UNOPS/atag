@@ -19,15 +19,14 @@
             this.DbContext = context.DbContext;
         }
 
-        public Tag AddTag(string name, int ownerType, string ownerId, int userId)
+        public int AddTag(Tag tag)
         {
-            var tag = new Tag(name, ownerType, ownerId, userId);
             this.DbContext.Tags.Add(tag);
             this.DbContext.SaveChanges();
-            return tag;
+            return tag.Id;
         }
 
-        public void AddTaggedEntity(ICollection<int> tagIds, string entityType, string entityKey, string comment, int userId)
+        public void AddTaggedEntity(ICollection<int> tagIds, string entityType, string entityKey, string note, int userId)
         {
             var existTagIds = this.DbContext.TaggedEntities
                 .Where(t => t.EntityType == entityType && t.EntityKey == entityKey && tagIds.Contains(t.TagId))
@@ -42,7 +41,7 @@
 
             foreach (var tag in tags)
             {
-                tag.TagEntity(entityKey, entityType, comment, userId);
+                tag.TagEntity(entityKey, entityType, note, userId);
             }
 
             this.DbContext.SaveChanges();
@@ -64,7 +63,7 @@
         public void DeleteTaggedEntity(int tagId, string entityType, string entityKey)
         {
             var taggedEntities = this.DbContext.TaggedEntities
-                .Where(a => a.EntityKey == entityKey && a.EntityType == entityType && a.TagId == tagId)
+                .Where(a => a.EntityType == entityType && a.EntityKey == entityKey && a.TagId == tagId)
                 .ToList();
 
             if (taggedEntities.Count == 0)
@@ -85,7 +84,7 @@
                 return;
             }
 
-            bool tagWithSameNameExists = this.DbContext.Tags.Any(t =>
+            var tagWithSameNameExists = this.DbContext.Tags.Any(t =>
                 t.OwnerType == tag.OwnerType &&
                 t.OwnerId == tag.OwnerId &&
                 t.Name == name &&
@@ -102,19 +101,34 @@
             this.DbContext.SaveChanges();
         }
 
-        public void EditTagComment(int taggedEntityId, string comment, int userId, string entityKey = null)
+        public void EditTagNote(int taggedEntityId, string note, int userId)
         {
-            var taggedEntityData = string.IsNullOrWhiteSpace(entityKey)
-                ? this.DbContext.TaggedEntities.Include(a => a.TagComment).Single(a => a.Id == taggedEntityId)
-                : this.DbContext.TaggedEntities.Include(a => a.TagComment)
-                    .Single(a => (a.EntityType + ":" + a.EntityKey + ":" + a.TagId).Equals(entityKey));
+            var taggedEntityData = this.DbContext.TaggedEntities
+                .Include(a => a.TagNote)
+                .Single(a => a.Id == taggedEntityId);
 
             if (taggedEntityData == null)
             {
                 return;
             }
 
-            taggedEntityData.Comment(comment, userId);
+            taggedEntityData.SetNote(note, userId);
+
+            this.DbContext.SaveChanges();
+        }
+
+        public void EditTagNote(string entityType, string entityKey, string note, int userId)
+        {
+            var taggedEntityData = this.DbContext.TaggedEntities
+                .Include(a => a.TagNote)
+                .Single(a => a.EntityType.Equals(entityType) && a.EntityKey.Equals(entityKey));
+
+            if (taggedEntityData == null)
+            {
+                return;
+            }
+
+            taggedEntityData.SetNote(note, userId);
 
             this.DbContext.SaveChanges();
         }
@@ -132,18 +146,22 @@
             return this.DbContext.Tags.FirstOrDefault(a => a.Id == tagId && !a.IsDeleted);
         }
 
-        public string LoadTagComment(int taggedEntityId, string entityKey)
+        public string LoadTagNote(int taggedEntityId)
         {
-            return !string.IsNullOrWhiteSpace(entityKey)
-                ? this.DbContext.TaggedEntities.Include(a => a.TagComment)
-                    .SingleOrDefault(a => (a.EntityType + ":" + a.EntityKey + ":" + a.TagId).Equals(entityKey))?.TagComment?.Comment
-                : this.DbContext.TaggedEntities.Include(a => a.TagComment).SingleOrDefault(a => a.Id == taggedEntityId)?.TagComment?.Comment;
+            return this.DbContext.TaggedEntities.Include(a => a.TagNote).SingleOrDefault(a => a.Id == taggedEntityId)?.TagNote?.Note;
+        }
+
+        public string LoadTagNote(string entityType, string entityKey)
+        {
+            return this.DbContext.TaggedEntities
+                .Include(a => a.TagNote)
+                .SingleOrDefault(a => a.EntityType.Equals(entityType) && a.EntityKey.Equals(entityKey))?.TagNote?.Note;
         }
 
         public PagedEntity<TaggedEntity> LoadTaggedEntities(int tagId, int pageIndex, int pageSize)
         {
             return this.DbContext.TaggedEntities
-                .Include(a => a.TagComment)
+                .Include(a => a.TagNote)
                 .Where(t => t.TagId == tagId)
                 .OrderByDescending(t => t.Id)
                 .WithPaging(pageIndex, pageSize);
@@ -158,7 +176,7 @@
                 .WithPaging(pageIndex, pageSize);
         }
 
-        public void TagEntity(ICollection<int> tagIds, string entityType, string entityKey, string comment, int userId)
+        public void TagEntity(ICollection<int> tagIds, string entityType, string entityKey, string note, int userId)
         {
             var existingTagIds = this.DbContext.TaggedEntities
                 .Where(t => t.EntityType == entityType && t.EntityKey == entityKey && tagIds.Contains(t.TagId))
@@ -173,7 +191,7 @@
 
             foreach (var tag in tags)
             {
-                tag.TagEntity(entityKey, entityType, comment, userId);
+                tag.TagEntity(entityKey, entityType, note, userId);
             }
 
             this.DbContext.SaveChanges();

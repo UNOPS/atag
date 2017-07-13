@@ -2,24 +2,24 @@
 {
     using System;
 
-    public class TagComment
+    public class TagNote
     {
-        public const int CommentMaxLength = 1000;
+        public const int NoteMaxLength = 1000;
 
-        protected TagComment()
+        protected TagNote()
         {
         }
 
-        public TagComment(string comment, int userId)
+        public TagNote(string note, int userId)
         {
-            comment.EnforceMaxLength(CommentMaxLength);
+            note.EnforceMaxLength(NoteMaxLength);
 
             this.CreatedByUserId = userId;
             this.CreatedOn = DateTime.UtcNow;
-            this.Comment = comment;
+            this.Note = note;
         }
 
-        public string Comment { get; protected set; }
+        public string Note { get; protected set; }
         public int CreatedByUserId { get; protected set; }
         public DateTime CreatedOn { get; protected set; }
         public int Id { get; protected set; }
@@ -27,13 +27,13 @@
         public DateTime? ModifiedOn { get; protected set; }
         public virtual TaggedEntity TaggedEntity { get; protected set; }
 
-        public void Edit(string comment, int userId)
+        public void Edit(string note, int userId)
         {
-            comment.EnforceMaxLength(CommentMaxLength);
+            note.EnforceMaxLength(NoteMaxLength);
 
             this.ModifiedByUserId = userId;
             this.ModifiedOn = DateTime.UtcNow;
-            this.Comment = comment;
+            this.Note = note;
         }
     }
 }

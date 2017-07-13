@@ -4,18 +4,18 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal class TagCommentMap : DbEntityConfiguration<TagComment>
+    internal class TagNoteMap : DbEntityConfiguration<TagNote>
     {
-        private const int CommentMaxLength = 1000;
+        private const int NoteMaxLength = 1000;
 
-        public override void Configure(EntityTypeBuilder<TagComment> entity)
+        public override void Configure(EntityTypeBuilder<TagNote> entity)
         {
-            entity.ToTable("TagComment");
+            entity.ToTable("TagNote");
             entity.HasKey(t => t.Id);
             entity.Property(t => t.Id).HasColumnName("Id").ValueGeneratedNever();
             entity.Property(t => t.CreatedOn).HasColumnName("DateCreated");
             entity.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
-            entity.Property(t => t.Comment).HasColumnName("Comment").HasMaxLength(CommentMaxLength);
+            entity.Property(t => t.Note).HasColumnName("Note").HasMaxLength(NoteMaxLength);
             entity.Property(t => t.ModifiedOn).HasColumnName("DateModified");
             entity.Property(t => t.ModifiedByUserId).HasColumnName("ModifiedByUserId");
         }

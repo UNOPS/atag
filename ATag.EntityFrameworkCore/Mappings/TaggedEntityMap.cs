@@ -19,7 +19,7 @@
             entity.Property(t => t.EntityKey).HasColumnName("EntityKey").HasMaxLength(EntityKeyMaxLength).IsUnicode(false);
             entity.Property(t => t.TagId).HasColumnName("TagId");
             entity.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
-            entity.HasOne(t => t.TagComment).WithOne(t => t.TaggedEntity).HasForeignKey<TagComment>(t => t.Id);
+            entity.HasOne(t => t.TagNote).WithOne(t => t.TaggedEntity).HasForeignKey<TagNote>(t => t.Id);
             entity.HasIndex(t => new { t.EntityType, t.EntityKey, t.TagId }).HasName("IX_TaggedEntity_EntityType_EntityKey_TagId");
         }
     }

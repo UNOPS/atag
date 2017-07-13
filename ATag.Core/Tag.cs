@@ -69,7 +69,7 @@
             this.TaggedEntities.Add(new TaggedEntity(this.Id, key, type, userId)
             {
                 Tag = this,
-                TagComment = new TagComment(comment, userId)
+                TagNote = new TagNote(comment, userId)
             });
         }
     }

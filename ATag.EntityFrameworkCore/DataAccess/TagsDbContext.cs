@@ -33,7 +33,7 @@
 
             builder.AddConfiguration(new TagMap());
             builder.AddConfiguration(new TaggedEntityMap());
-            builder.AddConfiguration(new TagCommentMap());
+            builder.AddConfiguration(new TagNoteMap());
         }
     }
 }

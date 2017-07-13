@@ -7,12 +7,9 @@
         /// <summary>
         /// Create new tag
         /// </summary>
-        /// <param name="name">Tag name</param>
-        /// <param name="ownerType">Owner type (e.g. Private or Public)</param>
-        /// <param name="ownerId">Owner id (e.g. UserId or RoleName)</param>
-        /// <param name="userId">User Id who creates tag</param>
-        /// <returns>Created tag.</returns>
-        Tag AddTag(string name, int ownerType, string ownerId, int userId);
+        /// <param name="tag">Tag object</param>
+        /// <returns>Tag Id</returns>
+        int AddTag(Tag tag);
 
         /// <summary>
         /// Add tagged entity for Tag
@@ -20,15 +17,15 @@
         /// <param name="tagIds">Tag Id(s)</param>
         /// <param name="entityType">Entity type</param>
         /// <param name="entityKey">Entity key</param>
-        /// <param name="comment">Comment</param>
-        /// <param name="userId">User id</param>
-        void AddTaggedEntity(ICollection<int> tagIds, string entityType, string entityKey, string comment, int userId);
+        /// <param name="note">Note</param>
+        /// <param name="userId">User id who tag entity</param>
+        void AddTaggedEntity(ICollection<int> tagIds, string entityType, string entityKey, string note, int userId);
 
         /// <summary>
         /// Delete tag
         /// </summary>
         /// <param name="tagId">Tag id</param>
-        /// <param name="userId">User Id</param>
+        /// <param name="userId">User id who deleted tag</param>
         void DeleteTag(int tagId, int userId);
 
         /// <summary>
@@ -50,21 +47,29 @@
         void EditTag(string name, string ownerId, int ownerType, int tagId, int userId);
 
         /// <summary>
-        /// Edit tag's comment
+        /// Edit tag's note
         /// </summary>
         /// <param name="taggedEntityId">TaggedEntity Id</param>
-        /// <param name="comment">Comment</param>
+        /// <param name="note">Comment</param>
         /// <param name="userId">User Id</param>
+        void EditTagNote(int taggedEntityId, string note, int userId);
+
+        /// <summary>
+        /// Edit tag's comment
+        /// </summary>
+        /// <param name="entityType">Entity type</param>
         /// <param name="entityKey">Entity key</param>
-        void EditTagComment(int taggedEntityId, string comment, int userId, string entityKey = null);
+        /// <param name="note">Comment</param>
+        /// <param name="userId">User Id</param>
+        void EditTagNote(string entityType, string entityKey, string note, int userId);
 
         /// <summary>
         /// Get list of tags of Entity
         /// </summary>
         /// <param name="entityType">Entity type</param>
-        /// <param name="entityKey">current page number</param>
-        /// <param name="filters">number of rows in page</param>
-        /// <returns>Returns paginated list of tags for given filter(s).</returns>
+        /// <param name="entityKey">Entity key</param>
+        /// <param name="filters">Owners' filters</param>
+        /// <returns>List of tags</returns>
         IEnumerable<Tag> LoadEntityTags(string entityType, string entityKey, params TagOwnerFilter[] filters);
 
         /// <summary>
@@ -73,14 +78,6 @@
         /// <param name="tagId">Tag id</param>
         /// <returns>Returns tag details.</returns>
         Tag LoadTag(int tagId);
-
-        /// <summary>
-        /// Load tag details
-        /// </summary>
-        /// <param name="taggedEntityId">TaggedEntity id</param>
-        /// <param name="entityKey">Entity key</param>
-        /// <returns>Returns tag's comment.</returns>
-        string LoadTagComment(int taggedEntityId, string entityKey);
 
         /// <summary>
         /// Load tag entities
@@ -92,12 +89,27 @@
         PagedEntity<TaggedEntity> LoadTaggedEntities(int tagId, int pageIndex, int pageSize);
 
         /// <summary>
+        /// Load tag details
+        /// </summary>
+        /// <param name="taggedEntityId">TaggedEntity id</param>
+        /// <returns>Returns tag's note.</returns>
+        string LoadTagNote(int taggedEntityId);
+
+        /// <summary>
+        /// Load tag details
+        /// </summary>
+        /// <param name="entityType">Entity type</param>
+        /// <param name="entityKey">Entity key</param>
+        /// <returns>Returns tag's note.</returns>
+        string LoadTagNote(string entityType, string entityKey);
+
+        /// <summary>
         /// Get all tags for filters
         /// </summary>
-        /// <param name="pageIndex"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="filters"></param>
-        /// <returns>Returns paginated list of tags for given filter(s).</returns>
+        /// <param name="pageIndex">Current page index</param>
+        /// <param name="pageSize">Page size</param>
+        /// <param name="filters">Owners' filters</param>
+        /// <returns>Returns paginated list of tags.</returns>
         PagedEntity<Tag> LoadTags(int pageIndex, int pageSize, params TagOwnerFilter[] filters);
 
         /// <summary>
@@ -106,8 +118,8 @@
         /// <param name="tagIds">Tag name</param>
         /// <param name="entityType">Entity type</param>
         /// <param name="entityKey">Entity key</param>
-        /// <param name="comment">Comment</param>
+        /// <param name="note">Note</param>
         /// <param name="userId">User Id who edit tag</param>
-        void TagEntity(ICollection<int> tagIds, string entityType, string entityKey, string comment, int userId);
+        void TagEntity(ICollection<int> tagIds, string entityType, string entityKey, string note, int userId);
     }
 }

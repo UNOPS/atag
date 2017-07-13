@@ -9,7 +9,7 @@
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "TagComment",
+                name: "TagNote",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -70,22 +70,22 @@
                 });
 
             migrationBuilder.CreateTable(
-                name: "TagComment",
+                name: "TagNote",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
-                    Comment = table.Column<string>(maxLength: 1000, nullable: true),
                     CreatedByUserId = table.Column<int>(nullable: false),
                     DateCreated = table.Column<DateTime>(nullable: false),
                     ModifiedByUserId = table.Column<int>(nullable: true),
-                    DateModified = table.Column<DateTime>(nullable: true)
+                    DateModified = table.Column<DateTime>(nullable: true),
+                    Note = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TagComment", x => x.Id);
+                    table.PrimaryKey("PK_TagNote", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TagComment_TaggedEntity_Id",
+                        name: "FK_TagNote_TaggedEntity_Id",
                         column: x => x.Id,
                         principalSchema: "dbo",
                         principalTable: "TaggedEntity",

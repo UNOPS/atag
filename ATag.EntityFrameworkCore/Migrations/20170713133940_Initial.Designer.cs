@@ -8,7 +8,7 @@ using ATag.EntityFrameworkCore.DataAccess;
 namespace ATag.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(TagsDbContext))]
-    [Migration("20170713083541_Initial")]
+    [Migration("20170713133940_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,32 +61,6 @@ namespace ATag.EntityFrameworkCore.Migrations
                     b.ToTable("Tag");
                 });
 
-            modelBuilder.Entity("ATag.Core.TagComment", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Comment")
-                        .HasColumnName("Comment")
-                        .HasMaxLength(1000);
-
-                    b.Property<int>("CreatedByUserId")
-                        .HasColumnName("CreatedByUserId");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnName("DateCreated");
-
-                    b.Property<int?>("ModifiedByUserId")
-                        .HasColumnName("ModifiedByUserId");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnName("DateModified");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TagComment");
-                });
-
             modelBuilder.Entity("ATag.Core.TaggedEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -122,12 +96,30 @@ namespace ATag.EntityFrameworkCore.Migrations
                     b.ToTable("TaggedEntity");
                 });
 
-            modelBuilder.Entity("ATag.Core.TagComment", b =>
+            modelBuilder.Entity("ATag.Core.TagNote", b =>
                 {
-                    b.HasOne("ATag.Core.TaggedEntity", "TaggedEntity")
-                        .WithOne("TagComment")
-                        .HasForeignKey("ATag.Core.TagComment", "Id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.Property<int>("Id")
+                        .HasColumnName("Id");
+
+                    b.Property<int>("CreatedByUserId")
+                        .HasColumnName("CreatedByUserId");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnName("DateCreated");
+
+                    b.Property<int?>("ModifiedByUserId")
+                        .HasColumnName("ModifiedByUserId");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnName("DateModified");
+
+                    b.Property<string>("Note")
+                        .HasColumnName("Note")
+                        .HasMaxLength(1000);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TagNote");
                 });
 
             modelBuilder.Entity("ATag.Core.TaggedEntity", b =>
@@ -135,6 +127,14 @@ namespace ATag.EntityFrameworkCore.Migrations
                     b.HasOne("ATag.Core.Tag", "Tag")
                         .WithMany("TaggedEntities")
                         .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("ATag.Core.TagNote", b =>
+                {
+                    b.HasOne("ATag.Core.TaggedEntity", "TaggedEntity")
+                        .WithOne("TagNote")
+                        .HasForeignKey("ATag.Core.TagNote", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

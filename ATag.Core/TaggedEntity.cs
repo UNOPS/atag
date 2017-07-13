@@ -6,7 +6,6 @@
     {
         public const int EntityKeyMaxLength = 20;
         public const int EntityTypeMaxLength = 30;
-        public const int CommentMaxLength = 1000;
 
         protected TaggedEntity()
         {
@@ -32,26 +31,26 @@
         public int Id { get; protected set; }
         public virtual Tag Tag { get; internal set; }
 
-        public virtual TagComment TagComment { get; internal set; }
+        public virtual TagNote TagNote { get; internal set; }
 
         public int TagId { get; protected set; }
 
-        public void Comment(string comment, int userId)
+        public void SetNote(string note, int userId)
         {
-            comment.EnforceMaxLength(CommentMaxLength);
+            note.EnforceMaxLength(TagNote.NoteMaxLength);
 
-            if (string.IsNullOrWhiteSpace(comment) || comment.Trim().Length < 1)
+            if (string.IsNullOrWhiteSpace(note) || note.Trim().Length < 1)
             {
                 throw new TagException("Tag's comment cannot be an empty string.");
             }
 
-            if (this.TagComment == null)
+            if (this.TagNote == null)
             {
-                this.TagComment = new TagComment(comment, userId);
+                this.TagNote = new TagNote(note, userId);
             }
             else
             {
-                this.TagComment.Edit(comment, userId);
+                this.TagNote.Edit(note, userId);
             }
         }
     }
