@@ -26,7 +26,6 @@
         public int? ModifiedByUserId { get; protected set; }
         public DateTime? ModifiedOn { get; protected set; }
         public virtual TaggedEntity TaggedEntity { get; protected set; }
-        public int TaggedEntityDataId { get; protected set; }
 
         public void Edit(string comment, int userId)
         {

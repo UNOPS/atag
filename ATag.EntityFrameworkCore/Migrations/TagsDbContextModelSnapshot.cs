@@ -63,9 +63,7 @@ namespace ATag.EntityFrameworkCore.Migrations
             modelBuilder.Entity("ATag.Core.TagComment", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Id");
 
                     b.Property<string>("Comment")
                         .HasColumnName("Comment")
@@ -83,14 +81,7 @@ namespace ATag.EntityFrameworkCore.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnName("DateModified");
 
-                    b.Property<int>("TaggedEntityDataId");
-
-                    b.Property<int?>("TaggedEntityId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("TaggedEntityId")
-                        .IsUnique();
 
                     b.ToTable("TagComment");
                 });
@@ -99,8 +90,7 @@ namespace ATag.EntityFrameworkCore.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("Id");
 
                     b.Property<int>("CreatedByUserId")
                         .HasColumnName("CreatedByUserId");
@@ -135,7 +125,7 @@ namespace ATag.EntityFrameworkCore.Migrations
                 {
                     b.HasOne("ATag.Core.TaggedEntity", "TaggedEntity")
                         .WithOne("TagComment")
-                        .HasForeignKey("ATag.Core.TagComment", "TaggedEntityId")
+                        .HasForeignKey("ATag.Core.TagComment", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

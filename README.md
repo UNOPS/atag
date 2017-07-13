@@ -42,16 +42,14 @@ CREATE TABLE [dbo].[TaggedEntity] (
 GO
 
 CREATE TABLE [dbo].[TagComment] (
-    [Id] int NOT NULL IDENTITY,
+    [Id] int NOT NULL,
     [Comment] nvarchar(1000),
     [CreatedByUserId] int NOT NULL,
     [DateCreated] datetime2 NOT NULL,
     [ModifiedByUserId] int,
     [DateModified] datetime2,
-    [TaggedEntityDataId] int NOT NULL,
-    [TaggedEntityId] int,
     CONSTRAINT [PK_TagComment] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_TagComment_TaggedEntity_TaggedEntityId] FOREIGN KEY ([TaggedEntityId]) REFERENCES [dbo].[TaggedEntity] ([Id]) ON DELETE CASCADE
+    CONSTRAINT [FK_TagComment_TaggedEntity_Id] FOREIGN KEY ([Id]) REFERENCES [dbo].[TaggedEntity] ([Id]) ON DELETE CASCADE
 );
 
 GO
@@ -60,15 +58,10 @@ CREATE INDEX [IX_Tag_OwnerType_OwnerId] ON [dbo].[Tag] ([OwnerType], [OwnerId]);
 
 GO
 
-CREATE UNIQUE INDEX [IX_TagComment_TaggedEntityId] ON [dbo].[TagComment] ([TaggedEntityId]) WHERE [TaggedEntityId] IS NOT NULL;
-
-GO
-
 CREATE INDEX [IX_TaggedEntity_TagId] ON [dbo].[TaggedEntity] ([TagId]);
 
 GO
 
 CREATE INDEX [IX_TaggedEntity_EntityType_EntityKey_TagId] ON [dbo].[TaggedEntity] ([EntityType], [EntityKey], [TagId]);
-
 ```
 
