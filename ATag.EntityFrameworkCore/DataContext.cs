@@ -12,9 +12,9 @@ namespace ATag.EntityFrameworkCore
         /// <summary>
         /// Instantiates a new instance of the DataContext class.
         /// </summary>
-        public DataContext(DbContextOptions options)
+        public DataContext(DbContextOptions options, string schema = "dbo")
         {
-            this.DbContext = new TagsDbContext(options);
+            this.DbContext = new TagsDbContext(options, schema);
         }
 
         // ReSharper disable once AutoPropertyCanBeMadeGetOnly.Local

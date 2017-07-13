@@ -15,8 +15,9 @@
     <Copyright>Copyright 2017 (c) UNOPS. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/UNOPS/atag</PackageProjectUrl>
     <RepositoryType>https://github.com/UNOPS/atag</RepositoryType>
-    <AssemblyVersion>0.0.1.0</AssemblyVersion>
-    <FileVersion>0.0.1.0</FileVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>0.0.0.0</FileVersion>
+    <Description>ATag is a very simple .NET Standard library to help you specifying tags for your systems' entities.</Description>
   </PropertyGroup>
 
 </Project>

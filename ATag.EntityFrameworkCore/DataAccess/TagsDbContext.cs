@@ -4,21 +4,22 @@
     using ATag.EntityFrameworkCore.Mappings;
     using Microsoft.EntityFrameworkCore;
 
-    public class TagsDbContext : DbContext
+    internal class TagsDbContext : DbContext
     {
         private const string DefaultConnectionString =
             "Server=(localdb)\\mssqllocaldb;Database=tag;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        private const string Schema = "tag";
+        private readonly string schema;
 
         public TagsDbContext()
-            : base(new DbContextOptionsBuilder().UseSqlServer(DefaultConnectionString).Options)
+            : this(new DbContextOptionsBuilder().UseSqlServer(DefaultConnectionString).Options, "dbo")
         {
 
         }
 
-        public TagsDbContext(DbContextOptions options) : base(options)
+        public TagsDbContext(DbContextOptions options, string schema) : base(options)
         {
+            this.schema = schema;
         }
 
         public virtual DbSet<Tag> Tags { get; set; }
@@ -28,11 +29,11 @@
         {
             base.OnModelCreating(builder);
 
-            builder.HasDefaultSchema("tag");
+            builder.HasDefaultSchema(this.schema);
 
-            builder.AddConfiguration(new TagMap(), Schema);
-            builder.AddConfiguration(new TaggedEntityMap(), Schema);
-            builder.AddConfiguration(new TagCommentMap(), Schema);
+            builder.AddConfiguration(new TagMap());
+            builder.AddConfiguration(new TaggedEntityMap());
+            builder.AddConfiguration(new TagCommentMap());
         }
     }
 }

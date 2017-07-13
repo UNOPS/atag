@@ -8,11 +8,10 @@
 
     internal static class Extensions
     {
-        public static void AddConfiguration<TEntity>(
-            this ModelBuilder modelBuilder,
-            DbEntityConfiguration<TEntity> entityConfiguration, string schema) where TEntity : class
+        public static void AddConfiguration<TEntity>(this ModelBuilder modelBuilder,
+            DbEntityConfiguration<TEntity> entityConfiguration) where TEntity : class
         {
-            modelBuilder.Entity<TEntity>(entity => entityConfiguration.Configure(entity, schema));
+            modelBuilder.Entity<TEntity>(entity => entityConfiguration.Configure(entity));
         }
 
         public static IQueryable<Tag> BelongingTo(this IQueryable<Tag> queryable, params TagOwnerFilter[] filters)

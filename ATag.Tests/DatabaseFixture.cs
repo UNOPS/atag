@@ -8,12 +8,10 @@
 
     public class DatabaseFixture
     {
-        private readonly string schema;
         private readonly DbContextOptions options;
 
-        public DatabaseFixture(string schema)
+        public DatabaseFixture()
         {
-            this.schema = schema;
             var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")

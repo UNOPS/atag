@@ -6,8 +6,11 @@
     {
         public const int EntityKeyMaxLength = 20;
         public const int EntityTypeMaxLength = 30;
-
         public const int CommentMaxLength = 1000;
+
+        protected TaggedEntity()
+        {
+        }
 
         public TaggedEntity(int tagId, string key, string type, int userId)
         {
@@ -15,23 +18,23 @@
             type.EnforceMaxLength(EntityTypeMaxLength);
 
             this.CreatedByUserId = userId;
-            this.DateCreated = DateTime.UtcNow;
+            this.CreatedOn = DateTime.UtcNow;
             this.EntityKey = key;
             this.EntityType = type;
             this.TagId = tagId;
         }
 
-        public int CreatedByUserId { get; set; }
-        public DateTime DateCreated { get; set; }
-        public string EntityKey { get; set; }
-        public string EntityType { get; set; }
+        public int CreatedByUserId { get; protected set; }
+        public DateTime CreatedOn { get; protected set; }
+        public string EntityKey { get; protected set; }
+        public string EntityType { get; protected set; }
 
-        public int Id { get; set; }
+        public int Id { get; protected set; }
+        public virtual Tag Tag { get; internal set; }
 
         public virtual TagComment TagComment { get; internal set; }
-        public virtual Tag TagData { get; internal set; }
 
-        public int TagId { get; set; }
+        public int TagId { get; protected set; }
 
         public void Comment(string comment, int userId)
         {

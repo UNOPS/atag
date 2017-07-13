@@ -8,33 +8,37 @@
         public const int NameMaxLength = 30;
         public const int OwnerIdMaxLength = 30;
 
+        protected Tag()
+        {
+        }
+
         public Tag(string name, int ownerType, string ownerId, int createdByUser)
         {
             name.EnforceMaxLength(NameMaxLength);
             ownerId.EnforceMaxLength(OwnerIdMaxLength);
 
             this.Name = name;
-            this.DateCreated = DateTime.UtcNow;
+            this.CreatedOn = DateTime.UtcNow;
             this.OwnerType = ownerType;
             this.OwnerId = ownerId;
             this.CreatedByUserId = createdByUser;
         }
 
-        public int CreatedByUserId { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime? DateModified { get; set; }
-        public int Id { get; set; }
-        public bool IsDeleted { get; set; }
-        public int? ModifiedByUserId { get; set; }
-        public string Name { get; set; }
-        public string OwnerId { get; set; }
-        public int OwnerType { get; set; }
-        public virtual ICollection<TaggedEntity> TaggedEntities { get; set; }
+        public int CreatedByUserId { get; protected set; }
+        public DateTime CreatedOn { get; protected set; }
+        public int Id { get; protected set; }
+        public bool IsDeleted { get; protected set; }
+        public int? ModifiedByUserId { get; protected set; }
+        public DateTime? ModifiedOn { get; protected set; }
+        public string Name { get; protected set; }
+        public string OwnerId { get; protected set; }
+        public int OwnerType { get; protected set; }
+        public virtual ICollection<TaggedEntity> TaggedEntities { get; protected set; }
 
         public void Delete(int modifiedByUser)
         {
             this.IsDeleted = true;
-            this.DateModified = DateTime.UtcNow;
+            this.ModifiedOn = DateTime.UtcNow;
             this.ModifiedByUserId = modifiedByUser;
         }
 
@@ -52,7 +56,7 @@
             this.OwnerType = ownerType;
             this.OwnerId = ownerId;
             this.ModifiedByUserId = modifiedByUser;
-            this.DateModified = DateTime.UtcNow;
+            this.ModifiedOn = DateTime.UtcNow;
         }
 
         public void TagEntity(string key, string type, string comment, int userId)
@@ -64,7 +68,7 @@
 
             this.TaggedEntities.Add(new TaggedEntity(this.Id, key, type, userId)
             {
-                TagData = this,
+                Tag = this,
                 TagComment = new TagComment(comment, userId)
             });
         }
