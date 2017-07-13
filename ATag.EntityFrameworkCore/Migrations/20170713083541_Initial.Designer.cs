@@ -8,7 +8,7 @@ using ATag.EntityFrameworkCore.DataAccess;
 namespace ATag.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(TagsDbContext))]
-    [Migration("20170713075453_Initial")]
+    [Migration("20170713083541_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
