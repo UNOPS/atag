@@ -6,17 +6,14 @@
 
     internal class TaggedEntityMap : DbEntityConfiguration<TaggedEntity>
     {
-        public const int EntityTypeMaxLength = 30;
-        public const int EntityKeyMaxLength = 20;
-
         public override void Configure(EntityTypeBuilder<TaggedEntity> entity)
         {
             entity.ToTable("TaggedEntity");
             entity.HasKey(t => t.Id);
-            entity.Property(t => t.Id).HasColumnName("Id");
-            entity.Property(t => t.CreatedOn).HasColumnName("DateCreated");
-            entity.Property(t => t.EntityType).HasColumnName("EntityType").HasMaxLength(EntityTypeMaxLength).IsUnicode(false);
-            entity.Property(t => t.EntityKey).HasColumnName("EntityKey").HasMaxLength(EntityKeyMaxLength).IsUnicode(false);
+            entity.Property(t => t.Id).HasColumnName("Id").UseSqlServerIdentityColumn();
+            entity.Property(t => t.CreatedOn).HasColumnName("CreatedOn");
+            entity.Property(t => t.EntityType).HasColumnName("EntityType").HasMaxLength(TaggedEntity.EntityTypeMaxLength).IsUnicode(false);
+            entity.Property(t => t.EntityKey).HasColumnName("EntityKey").HasMaxLength(TaggedEntity.EntityKeyMaxLength).IsUnicode(false);
             entity.Property(t => t.TagId).HasColumnName("TagId");
             entity.Property(t => t.CreatedByUserId).HasColumnName("CreatedByUserId");
             entity.HasOne(t => t.TagNote).WithOne(t => t.TaggedEntity).HasForeignKey<TagNote>(t => t.Id);

@@ -34,11 +34,11 @@
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedByUserId = table.Column<int>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ModifiedByUserId = table.Column<int>(nullable: true),
-                    DateModified = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(unicode: false, maxLength: 30, nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(maxLength: 30, nullable: true),
                     OwnerId = table.Column<string>(unicode: false, maxLength: 30, nullable: true),
                     OwnerType = table.Column<int>(nullable: false)
                 },
@@ -52,7 +52,7 @@
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedByUserId = table.Column<int>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     EntityKey = table.Column<string>(unicode: false, maxLength: 20, nullable: true),
                     EntityType = table.Column<string>(unicode: false, maxLength: 30, nullable: true),
                     TagId = table.Column<int>(nullable: false)
@@ -76,9 +76,9 @@
                 {
                     Id = table.Column<int>(nullable: false),
                     CreatedByUserId = table.Column<int>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedByUserId = table.Column<int>(nullable: true),
-                    DateModified = table.Column<DateTime>(nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
                     Note = table.Column<string>(maxLength: 1000, nullable: true)
                 },
                 constraints: table =>

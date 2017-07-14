@@ -16,11 +16,11 @@ Initialize database with this script:
 CREATE TABLE [dbo].[Tag] (
     [Id] int NOT NULL IDENTITY,
     [CreatedByUserId] int NOT NULL,
-    [DateCreated] datetime2 NOT NULL,
+    [CreatedOn] datetime2 NOT NULL,
     [IsDeleted] bit NOT NULL,
     [ModifiedByUserId] int,
-    [DateModified] datetime2,
-    [Name] varchar(30),
+    [ModifiedOn] datetime2,
+    [Name] nvarchar(30),
     [OwnerId] varchar(30),
     [OwnerType] int NOT NULL,
     CONSTRAINT [PK_Tag] PRIMARY KEY ([Id])
@@ -31,7 +31,7 @@ GO
 CREATE TABLE [dbo].[TaggedEntity] (
     [Id] int NOT NULL IDENTITY,
     [CreatedByUserId] int NOT NULL,
-    [DateCreated] datetime2 NOT NULL,
+    [CreatedOn] datetime2 NOT NULL,
     [EntityKey] varchar(20),
     [EntityType] varchar(30),
     [TagId] int NOT NULL,
@@ -44,9 +44,9 @@ GO
 CREATE TABLE [dbo].[TagNote] (
     [Id] int NOT NULL,
     [CreatedByUserId] int NOT NULL,
-    [DateCreated] datetime2 NOT NULL,
+    [CreatedOn] datetime2 NOT NULL,
     [ModifiedByUserId] int,
-    [DateModified] datetime2,
+    [ModifiedOn] datetime2,
     [Note] nvarchar(1000),
     CONSTRAINT [PK_TagNote] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_TagNote_TaggedEntity_Id] FOREIGN KEY ([Id]) REFERENCES [dbo].[TaggedEntity] ([Id]) ON DELETE CASCADE

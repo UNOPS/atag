@@ -8,7 +8,7 @@ using ATag.EntityFrameworkCore.DataAccess;
 namespace ATag.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(TagsDbContext))]
-    [Migration("20170713133940_Initial")]
+    [Migration("20170714163902_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,7 +29,7 @@ namespace ATag.EntityFrameworkCore.Migrations
                         .HasColumnName("CreatedByUserId");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnName("DateCreated");
+                        .HasColumnName("CreatedOn");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnName("IsDeleted");
@@ -38,12 +38,11 @@ namespace ATag.EntityFrameworkCore.Migrations
                         .HasColumnName("ModifiedByUserId");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnName("DateModified");
+                        .HasColumnName("ModifiedOn");
 
                     b.Property<string>("Name")
                         .HasColumnName("Name")
-                        .HasMaxLength(30)
-                        .IsUnicode(false);
+                        .HasMaxLength(30);
 
                     b.Property<string>("OwnerId")
                         .HasColumnName("OwnerId")
@@ -65,13 +64,14 @@ namespace ATag.EntityFrameworkCore.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("Id");
+                        .HasColumnName("Id")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CreatedByUserId")
                         .HasColumnName("CreatedByUserId");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnName("DateCreated");
+                        .HasColumnName("CreatedOn");
 
                     b.Property<string>("EntityKey")
                         .HasColumnName("EntityKey")
@@ -105,13 +105,13 @@ namespace ATag.EntityFrameworkCore.Migrations
                         .HasColumnName("CreatedByUserId");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnName("DateCreated");
+                        .HasColumnName("CreatedOn");
 
                     b.Property<int?>("ModifiedByUserId")
                         .HasColumnName("ModifiedByUserId");
 
                     b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnName("DateModified");
+                        .HasColumnName("ModifiedOn");
 
                     b.Property<string>("Note")
                         .HasColumnName("Note")

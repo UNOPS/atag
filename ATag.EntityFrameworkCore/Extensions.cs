@@ -11,7 +11,7 @@
         public static void AddConfiguration<TEntity>(this ModelBuilder modelBuilder,
             DbEntityConfiguration<TEntity> entityConfiguration) where TEntity : class
         {
-            modelBuilder.Entity<TEntity>(entity => entityConfiguration.Configure(entity));
+            modelBuilder.Entity<TEntity>(entityConfiguration.Configure);
         }
 
         public static IQueryable<Tag> BelongingTo(this IQueryable<Tag> queryable, params TagOwnerFilter[] filters)
@@ -28,10 +28,7 @@
                 .Where(filter);
         }
 
-        public static PagedEntity<T> WithPaging<T>(
-            this IQueryable<T> query,
-            int pageNum,
-            int pageSize)
+        public static PagedEntity<T> WithPaging<T>(this IQueryable<T> query, int pageIndex, int pageSize)
         {
             if (pageSize <= 0)
             {
@@ -42,13 +39,13 @@
             var rowsCount = query.Count();
 
             //If page number should be > 0 else set to first page
-            if (rowsCount <= pageSize || pageNum <= 0)
+            if (rowsCount <= pageSize || pageIndex <= 0)
             {
-                pageNum = 1;
+                pageIndex = 1;
             }
 
             //Calculate number of rows to skip on page size
-            var excludedRows = (pageNum - 1) * pageSize;
+            var excludedRows = (pageIndex - 1) * pageSize;
 
             return new PagedEntity<T>
             {

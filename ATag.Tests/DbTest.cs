@@ -45,5 +45,18 @@
             var data = tagService.LoadTagEntities(tagId, 1, 10);
             Assert.NotEmpty(data.Results.Select(a => a.EntityKey.Equals(entityKey) && a.EntityType.Equals(entityType)));
         }
+
+        [Fact]
+        public void TagNotExists()
+        {
+            var tagService = new TagService(this.tagRepository);
+
+            var teamFilter = new TagOwnerFilter(2, "Team");
+            var personalFilter = new TagOwnerFilter(1, "1");
+
+            var tags = tagService.LoadTags(1, 10, teamFilter, personalFilter).Results.ToList();
+
+            Assert.Equal(0, tags.Count);
+        }
     }
 }

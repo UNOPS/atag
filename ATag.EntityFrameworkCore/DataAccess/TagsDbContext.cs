@@ -14,7 +14,6 @@
         public TagsDbContext()
             : this(new DbContextOptionsBuilder().UseSqlServer(DefaultConnectionString).Options, "dbo")
         {
-
         }
 
         public TagsDbContext(DbContextOptions options, string schema) : base(options)
@@ -22,8 +21,9 @@
             this.schema = schema;
         }
 
-        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<TaggedEntity> TaggedEntities { get; set; }
+        public virtual DbSet<TagNote> TagNotes { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
