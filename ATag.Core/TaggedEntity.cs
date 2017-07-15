@@ -39,7 +39,7 @@
         {
             note.EnforceMaxLength(TagNote.NoteMaxLength);
 
-            if (string.IsNullOrWhiteSpace(note) || note.Trim().Length < 1)
+            if (string.IsNullOrWhiteSpace(note))
             {
                 throw new TagException("Tag's comment cannot be an empty string.");
             }

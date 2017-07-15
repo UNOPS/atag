@@ -1,62 +1,54 @@
 ﻿namespace ATag.Tests
 {
-    using System.Linq;
-    using ATag.Core;
-    using ATag.EntityFrameworkCore;
-    using Xunit;
+	using System.Linq;
+	using ATag.Core;
+	using ATag.EntityFrameworkCore;
+	using Xunit;
 
-    [Collection(nameof(DatabaseCollectionFixture))]
-    public class DbTest
-    {
-        public DbTest(DatabaseFixture dbFixture)
-        {
-            this.dbFixture = dbFixture;
-            this.tagRepository = new TagRepository(this.dbFixture.CreateDataContext());
-        }
+	[Collection(nameof(DatabaseCollectionFixture))]
+	public class DbTest
+	{
+		public DbTest(DatabaseFixture dbFixture)
+		{
+			this.tagRepository = new TagRepository(dbFixture.CreateDataContext());
+		}
 
-        private readonly DatabaseFixture dbFixture;
-        private readonly TagRepository tagRepository;
+		private readonly ITagRepository tagRepository;
 
-        [Fact]
-        public void CanCreateTag()
-        {
-            var tagService = new TagService(this.tagRepository);
+		[Fact]
+		public void CanCreateTag()
+		{
+			var tagId = this.tagRepository.AddTag(new Tag("Test", 1, "1", 1));
 
-            var tagId = tagService.AddTag("Test", "1", 1, 1);
+			Assert.NotEqual(0, tagId);
+			Assert.NotNull(this.tagRepository.LoadTag(tagId));
+		}
 
-            Assert.NotEqual(0, tagId);
-            Assert.NotNull(this.tagRepository.LoadTag(tagId));
-        }
+		[Fact]
+		public void CreateTaggedEntity()
+		{
+			var tagId = this.tagRepository.AddTag(new Tag("TestABC", 1, "1", 1));
 
-        [Fact]
-        public void CreateTaggedEntity()
-        {
-            var tagService = new TagService(this.tagRepository);
+			Assert.NotEqual(0, tagId);
+			Assert.NotNull(this.tagRepository.LoadTag(tagId));
 
-            var tagId = tagService.AddTag("TestABC", "1", 1, 1);
+			var entityKey = "1";
+			var entityType = "Circle";
+			this.tagRepository.TagEntity(new[] { tagId }, entityType, entityKey, "Test ABC", 1);
 
-            Assert.NotEqual(0, tagId);
-            Assert.NotNull(this.tagRepository.LoadTag(tagId));
+			var data = this.tagRepository.LoadTaggedEntities(tagId, 1, 10);
+			Assert.NotEmpty(data.Results.Select(a => a.EntityKey.Equals(entityKey) && a.EntityType.Equals(entityType)));
+		}
 
-            var entityKey = "1";
-            var entityType = "Circle";
-            tagService.TagEntity(new[] { tagId }, entityType, entityKey, "Test ABC", 1);
+		[Fact]
+		public void TagNotExists()
+		{
+			var teamFilter = new TagOwnerFilter(2, "Team");
+			var personalFilter = new TagOwnerFilter(1, "1");
 
-            var data = tagService.LoadTagEntities(tagId, 1, 10);
-            Assert.NotEmpty(data.Results.Select(a => a.EntityKey.Equals(entityKey) && a.EntityType.Equals(entityType)));
-        }
+			var tags = this.tagRepository.LoadTags(1, 10, teamFilter, personalFilter).Results.ToList();
 
-        [Fact]
-        public void TagNotExists()
-        {
-            var tagService = new TagService(this.tagRepository);
-
-            var teamFilter = new TagOwnerFilter(2, "Team");
-            var personalFilter = new TagOwnerFilter(1, "1");
-
-            var tags = tagService.LoadTags(1, 10, teamFilter, personalFilter).Results.ToList();
-
-            Assert.Equal(0, tags.Count);
-        }
-    }
+			Assert.Equal(0, tags.Count);
+		}
+	}
 }

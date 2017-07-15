@@ -31,9 +31,9 @@
 
             builder.HasDefaultSchema(this.schema);
 
-            builder.AddConfiguration(new TagMap());
-            builder.AddConfiguration(new TaggedEntityMap());
-            builder.AddConfiguration(new TagNoteMap());
+            builder.AddConfiguration(new TagMap(this.schema));
+            builder.AddConfiguration(new TaggedEntityMap(this.schema));
+            builder.AddConfiguration(new TagNoteMap(this.schema));
         }
     }
 }
