@@ -6,9 +6,16 @@
 
     internal class TagMap : DbEntityConfiguration<Tag>
     {
-        public override void Configure(EntityTypeBuilder<Tag> entity)
+	    private readonly string schema;
+
+	    public TagMap(string schema)
+	    {
+		    this.schema = schema;
+	    }
+
+	    public override void Configure(EntityTypeBuilder<Tag> entity)
         {
-            entity.ToTable("Tag");
+            entity.ToTable("Tag", this.schema);
             entity.HasKey(t => t.Id);
             entity.Property(t => t.Id).HasColumnName("Id").UseSqlServerIdentityColumn();
             entity.Property(t => t.Name).HasColumnName("Name").HasMaxLength(Tag.NameMaxLength);
