@@ -117,11 +117,11 @@
             this.DbContext.SaveChanges();
         }
 
-        public void EditTagNote(string entityType, string entityKey, string note, int userId)
+        public void EditTagNote(int tagId, string entityType, string entityKey, string note, int userId)
         {
             var taggedEntityData = this.DbContext.TaggedEntities
                 .Include(a => a.TagNote)
-                .Single(a => a.EntityType.Equals(entityType) && a.EntityKey.Equals(entityKey));
+                .Single(a => a.TagId == tagId && a.EntityType.Equals(entityType) && a.EntityKey.Equals(entityKey));
 
             if (taggedEntityData == null)
             {

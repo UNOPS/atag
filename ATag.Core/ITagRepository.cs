@@ -57,11 +57,12 @@
         /// <summary>
         /// Edit tag's comment
         /// </summary>
+        /// <param name="tagId">Tag Id</param>
         /// <param name="entityType">Entity type</param>
         /// <param name="entityKey">Entity key</param>
         /// <param name="note">Comment</param>
         /// <param name="userId">User Id</param>
-        void EditTagNote(string entityType, string entityKey, string note, int userId);
+        void EditTagNote(int tagId, string entityType, string entityKey, string note, int userId);
 
         /// <summary>
         /// Get list of tags of Entity
