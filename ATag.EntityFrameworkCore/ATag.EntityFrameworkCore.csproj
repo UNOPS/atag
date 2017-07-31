@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <Authors>UNOPS</Authors>
-    <Version>0.0.2-beta</Version>
+    <Version>0.0.3-beta</Version>
     <Company>UNOPS</Company>
     <Description>EFCore target for ATag</Description>
     <PackageProjectUrl>https://github.com/UNOPS/atag</PackageProjectUrl>
