@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
     <Authors>UNOPS</Authors>
-    <Version>0.0.3-beta</Version>
+    <Version>0.0.4-beta</Version>
     <Company>UNOPS</Company>
     <Description>EFCore target for ATag</Description>
     <PackageProjectUrl>https://github.com/UNOPS/atag</PackageProjectUrl>
     <RepositoryUrl>https://github.com/UNOPS/atag</RepositoryUrl>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <PackageTags>tag</PackageTags>
+    <PackageTags>tag label category</PackageTags>
     <Copyright>Copyright 2017 (c) UNOPS. All rights reserved.</Copyright>
   </PropertyGroup>
 
