@@ -146,6 +146,15 @@
             return this.DbContext.Tags.FirstOrDefault(a => a.Id == tagId && !a.IsDeleted);
         }
 
+        public IEnumerable<TaggedEntity> LoadTaggedEntities(int tagId)
+        {
+            return this.DbContext.TaggedEntities
+                .Include(a => a.TagNote)
+                .Where(t => t.TagId == tagId)
+                .OrderByDescending(t => t.Id)
+                .ToArray();
+        }
+
         public string LoadTagNote(int taggedEntityId)
         {
             return this.DbContext.TaggedEntities.Include(a => a.TagNote).SingleOrDefault(a => a.Id == taggedEntityId)?.TagNote?.Note;
@@ -174,6 +183,15 @@
                 .Where(a => !a.IsDeleted)
                 .OrderBy(a => a.Id)
                 .WithPaging(pageIndex, pageSize);
+        }
+
+        public IEnumerable<Tag> LoadTags(params TagOwnerFilter[] filters)
+        {
+            return this.DbContext.Tags
+                .BelongingTo(filters.ToArray())
+                .Where(a => !a.IsDeleted)
+                .OrderBy(a => a.Id)
+                .ToArray();
         }
 
         public void TagEntity(ICollection<int> tagIds, string entityType, string entityKey, string note, int userId)

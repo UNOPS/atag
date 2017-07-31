@@ -89,6 +89,13 @@
         PagedEntity<TaggedEntity> LoadTaggedEntities(int tagId, int pageIndex, int pageSize);
 
         /// <summary>
+        /// Load tag entities
+        /// </summary>
+        /// <param name="tagId">Tag id</param>
+        /// <returns>Returns paginated list of tags for given filter(s).</returns>
+        IEnumerable<TaggedEntity> LoadTaggedEntities(int tagId);
+
+        /// <summary>
         /// Load tag details
         /// </summary>
         /// <param name="taggedEntityId">TaggedEntity id</param>
@@ -111,6 +118,13 @@
         /// <param name="filters">Owners' filters</param>
         /// <returns>Returns paginated list of tags.</returns>
         PagedEntity<Tag> LoadTags(int pageIndex, int pageSize, params TagOwnerFilter[] filters);
+
+        /// <summary>
+        /// Get all tags for filters
+        /// </summary>
+        /// <param name="filters">Owners' filters</param>
+        /// <returns>Returns paginated list of tags.</returns>
+        IEnumerable<Tag> LoadTags(params TagOwnerFilter[] filters);
 
         /// <summary>
         /// Tag entity

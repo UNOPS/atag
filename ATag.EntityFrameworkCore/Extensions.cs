@@ -6,7 +6,7 @@
     using LinqKit;
     using Microsoft.EntityFrameworkCore;
 
-    internal static class Extensions
+    internal static class LoadTagsExtensions
     {
         public static void AddConfiguration<TEntity>(this ModelBuilder modelBuilder,
             DbEntityConfiguration<TEntity> entityConfiguration) where TEntity : class
@@ -49,7 +49,7 @@
 
             return new PagedEntity<T>
             {
-                Results = query.Skip(excludedRows).Take(Math.Min(pageSize, rowsCount)).ToArray(),
+                Results = query.Skip(excludedRows).Take(pageSize).ToArray(),
                 TotalCount = rowsCount
             };
         }
