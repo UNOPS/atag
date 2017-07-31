@@ -160,11 +160,11 @@
             return this.DbContext.TaggedEntities.Include(a => a.TagNote).SingleOrDefault(a => a.Id == taggedEntityId)?.TagNote?.Note;
         }
 
-        public string LoadTagNote(string entityType, string entityKey)
+        public string LoadTagNote(int tagId, string entityType, string entityKey)
         {
             return this.DbContext.TaggedEntities
                 .Include(a => a.TagNote)
-                .SingleOrDefault(a => a.EntityType.Equals(entityType) && a.EntityKey.Equals(entityKey))?.TagNote?.Note;
+                .SingleOrDefault(a => a.TagId == tagId && a.EntityType.Equals(entityType) && a.EntityKey.Equals(entityKey))?.TagNote?.Note;
         }
 
         public PagedEntity<TaggedEntity> LoadTaggedEntities(int tagId, int pageIndex, int pageSize)

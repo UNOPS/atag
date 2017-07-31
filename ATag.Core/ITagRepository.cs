@@ -105,10 +105,11 @@
         /// <summary>
         /// Load tag details
         /// </summary>
+        /// <param name="tagId">Tag Id</param>
         /// <param name="entityType">Entity type</param>
         /// <param name="entityKey">Entity key</param>
         /// <returns>Returns tag's note.</returns>
-        string LoadTagNote(string entityType, string entityKey);
+        string LoadTagNote(int tagId, string entityType, string entityKey);
 
         /// <summary>
         /// Get all tags for filters
