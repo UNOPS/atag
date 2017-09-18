@@ -25,6 +25,26 @@
         }
 
         [Fact]
+        public void CanOwnMultipleTag()
+        {
+            var tagId = this.tagRepository.AddTag(new Tag("Procure computer", 2, "Manager,Supervisor", 1));
+
+            Assert.NotEqual(0, tagId);
+            Assert.NotNull(this.tagRepository.LoadTag(tagId));
+
+            var teamFilters = new[]
+            {
+                new TagOwnerFilter(2, "Manager"),
+                new TagOwnerFilter(2, "Supervisor"),
+                new TagOwnerFilter(1, "John")
+            };
+
+            var tags = this.tagRepository.LoadTags(teamFilters).ToList();
+
+            Assert.NotEmpty(tags);
+        }
+
+        [Fact]
         public void CreateTaggedEntity()
         {
             var tagId = this.tagRepository.AddTag(new Tag("TestABC", 1, "1", 1));
