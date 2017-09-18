@@ -1,6 +1,5 @@
 ﻿namespace ATag.EntityFrameworkCore
 {
-    using System;
     using System.Linq;
     using ATag.Core;
     using LinqKit;
@@ -20,7 +19,7 @@
 
             foreach (var recipient in filters)
             {
-                filter = filter.Or(t => t.OwnerType == recipient.OwnerType && t.OwnerId == recipient.OwnerId);
+                filter = filter.Or(t => t.OwnerType == recipient.OwnerType && t.OwnerId.Contains(recipient.OwnerId));
             }
 
             return queryable
