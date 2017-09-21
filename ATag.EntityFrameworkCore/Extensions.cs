@@ -19,7 +19,7 @@
 
             foreach (var recipient in filters)
             {
-                filter = filter.Or(t => t.OwnerType == recipient.OwnerType && t.OwnerId.Contains(recipient.OwnerId));
+                filter = filter.Or(t => t.OwnerType == recipient.OwnerType && t.OwnerId == recipient.OwnerId);
             }
 
             return queryable

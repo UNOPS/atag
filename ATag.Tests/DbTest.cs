@@ -27,7 +27,7 @@
         [Fact]
         public void CanOwnMultipleTag()
         {
-            var tagId = this.tagRepository.AddTag(new Tag("Procure computer", 2, "Manager,Supervisor", 1));
+            var tagId = this.tagRepository.AddTag(new Tag("Procure computer", 2, "Manager", 1));
 
             Assert.NotEqual(0, tagId);
             Assert.NotNull(this.tagRepository.LoadTag(tagId));
