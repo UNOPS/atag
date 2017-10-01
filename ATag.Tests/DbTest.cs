@@ -66,7 +66,7 @@
             var teamFilter = new TagOwnerFilter(2, "Team");
             var personalFilter = new TagOwnerFilter(1, "1");
 
-            var tag = this.tagRepository.LoadTags(teamFilter, personalFilter).FirstOrDefault(a => a.Name.Equals("TestABC"));
+            var tag = this.tagRepository.LoadTags(teamFilter, personalFilter).First(a => a.Name.Equals("TestABC"));
             var entityKey = "1";
             var entityType = "Circle";
 
