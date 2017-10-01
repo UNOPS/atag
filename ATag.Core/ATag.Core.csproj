@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <ApplicationIcon />
     <OutputTypeEx>library</OutputTypeEx>
     <StartupObject />
-    <Version>0.0.6-beta</Version>
+    <Version>0.0.7-beta</Version>
     <Authors>UNOPS</Authors>
     <Company>UNOPS</Company>
     <Copyright>Copyright 2017 (c) UNOPS. All rights reserved.</Copyright>
