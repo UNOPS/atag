@@ -73,12 +73,21 @@
 		/// <returns>List of tags</returns>
 		IEnumerable<Tag> LoadEntityTags(string entityType, string entityKey, params TagOwnerFilter[] filters);
 
-		/// <summary>
-		/// Load tag details.
-		/// </summary>
-		/// <param name="tagId">Tag id</param>
-		/// <returns>Returns tag details.</returns>
-		Tag LoadTag(int tagId);
+        /// <summary>
+        /// Get tags for the given entity.
+        /// </summary>
+        /// <param name="entityType">Entity type</param>
+        /// <param name="entityKeys">Entity keys</param>
+        /// <param name="filters">Owners' filters</param>
+        /// <returns>List of tags</returns>
+        IEnumerable<Tag> LoadEntityTags(string entityType, string[] entityKeys, params TagOwnerFilter[] filters);
+
+        /// <summary>
+        /// Load tag details.
+        /// </summary>
+        /// <param name="tagId">Tag id</param>
+        /// <returns>Returns tag details.</returns>
+        Tag LoadTag(int tagId);
 
 		/// <summary>
 		/// Load tag entities.

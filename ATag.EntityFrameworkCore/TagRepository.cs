@@ -149,8 +149,17 @@
 				.ToArray();
 		}
 
-		/// <inheritdoc />
-		public Tag LoadTag(int tagId)
+        /// <inheritdoc />
+        public IEnumerable<Tag> LoadEntityTags(string entityType, string[] entityKeys, params TagOwnerFilter[] filters)
+        {
+            return this.DbContext.Tags
+                .BelongingTo(filters.ToArray())
+                .Where(a => !a.IsDeleted && a.TaggedEntities.Any(t => entityKeys.Contains(t.EntityKey) && t.EntityType == entityType))
+                .ToArray();
+        }
+
+        /// <inheritdoc />
+        public Tag LoadTag(int tagId)
 		{
 			return this.DbContext.Tags.FirstOrDefault(a => a.Id == tagId && !a.IsDeleted);
 		}
