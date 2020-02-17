@@ -83,6 +83,14 @@
         IEnumerable<Tag> LoadEntityTags(string entityType, string[] entityKeys, params TagOwnerFilter[] filters);
 
         /// <summary>
+        /// Get tags for the given entity.
+        /// </summary>
+        /// <param name="entityType">Entity type</param>
+        /// <param name="filters">Owners' filters</param>
+        /// <returns>List of tags</returns>
+        IEnumerable<Tag> LoadEntityTags(string entityType, params TagOwnerFilter[] filters);
+
+        /// <summary>
         /// Load tag details.
         /// </summary>
         /// <param name="tagId">Tag id</param>

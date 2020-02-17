@@ -153,8 +153,19 @@
         public IEnumerable<Tag> LoadEntityTags(string entityType, string[] entityKeys, params TagOwnerFilter[] filters)
         {
             return this.DbContext.Tags
+                .Include(a => a.TaggedEntities)
                 .BelongingTo(filters.ToArray())
                 .Where(a => !a.IsDeleted && a.TaggedEntities.Any(t => entityKeys.Contains(t.EntityKey) && t.EntityType == entityType))
+                .ToArray();
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<Tag> LoadEntityTags(string entityType, params TagOwnerFilter[] filters)
+        {
+            return this.DbContext.Tags
+                .Include(a => a.TaggedEntities)
+                .BelongingTo(filters.ToArray())
+                .Where(a => !a.IsDeleted && a.TaggedEntities.Any(t => t.EntityType == entityType))
                 .ToArray();
         }
 
