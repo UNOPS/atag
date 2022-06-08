@@ -24,7 +24,7 @@ jobs:
       matrix: 
         os: ['windows-latest']
     runs-on: ${{ matrix.os }}
-    # if: github.ref == 'refs/heads/master' && success()
+    if: github.ref == 'refs/heads/master' && success()
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -44,10 +44,5 @@ jobs:
         run: dotnet test --configuration Release --no-restore --no-build -l trx --verbosity normal
       - name: Pack
         run: dotnet pack --no-build --configuration Release --output .
-      # - name: PushNuget
-      #   run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_API_KEY}} --skip-duplicate
-      # - name: Artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: artifacts
-      #     path: artifacts/**/*
+      - name: PushNuget
+        run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{secrets.NUGET_API_KEY}} --skip-duplicate
