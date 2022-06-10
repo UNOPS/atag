@@ -20,9 +20,9 @@ jobs:
     name: Build and Publish NuGets
     timeout-minutes: 60
     strategy:
-    # max-parallel: 2
       matrix: 
         os: ['windows-latest']
+        dotnet: [ '6.0.x' ]
     runs-on: ${{ matrix.os }}
     if: github.ref == 'refs/heads/master' && success()
     steps:
@@ -31,11 +31,7 @@ jobs:
       - name: Install .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.x'
-      - name: Install .NET Core SDK
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '2.1.x'
+          dotnet-version: ${{ matrix.dotnet }}
       - name: Clean
         run: dotnet clean --configuration Release
       - name: Build
