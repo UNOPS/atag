@@ -1,0 +1,8 @@
+﻿[*.cs]
+
+# CS1591: Missing XML comment for publicly visible type or member
+dotnet_diagnostic.CS1591.severity = none
+# CS0618: Obsolete inside designer files
+dotnet_diagnostic.CS0618.severity = none
+# SA1600: Elements should be documented
+dotnet_analyzer_diagnostic.severity = silent

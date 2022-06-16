@@ -1,0 +1,36 @@
+<Project>
+
+    <Import Project="..\Directory.Build.props"/>
+    
+    <PropertyGroup>
+        <IsPackable>True</IsPackable>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>UNOPS</Authors>
+        <Company>UNOPS</Company>
+        <Copyright>Copyright 2017-2022 (c) UNOPS. All rights reserved.</Copyright>
+        <Description>ATag is a very simple .NET Standard library to help you specifying tags for your systems' entities.</Description>
+        <NeutralLanguage>English (United States)</NeutralLanguage>
+        <PackageProjectUrl>https://github.com/UNOPS/atag</PackageProjectUrl>
+        <PackageTags>tag label category</PackageTags>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/UNOPS/atag</RepositoryUrl>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../../LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <PackageIcon>content\atag.png</PackageIcon>
+        <PackageIconUrl>https://github.com/UNOPS/atag/blob/develop/atag.png</PackageIconUrl>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="../../atag.png" Pack="true" Visible="false" PackagePath="content\atag.png" />
+    </ItemGroup>
+
+</Project>
