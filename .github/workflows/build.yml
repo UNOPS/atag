@@ -16,14 +16,38 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    name: Build and run unit test
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        os: [ 'windows-latest' ]
+        dotnet: [ '6.0.x' ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Install .NET Core SDK
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+      - name: Clean
+        run: dotnet clean --configuration Release
+      - name: Build
+        run: dotnet build --configuration Release
+      - name: Test
+        run: dotnet test --configuration Release --no-restore --no-build -l trx --verbosity normal
+
   publish:
     name: Build and Publish NuGets
     timeout-minutes: 60
     strategy:
-    # max-parallel: 2
       matrix: 
         os: ['windows-latest']
+        dotnet: [ '6.0.x' ]
     runs-on: ${{ matrix.os }}
+    needs:
+      - build
     if: github.ref == 'refs/heads/master' && success()
     steps:
       - name: Check out code
@@ -31,11 +55,7 @@ jobs:
       - name: Install .NET Core SDK
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '3.1.x'
-      - name: Install .NET Core SDK
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '2.1.x'
+          dotnet-version: ${{ matrix.dotnet }}
       - name: Clean
         run: dotnet clean --configuration Release
       - name: Build

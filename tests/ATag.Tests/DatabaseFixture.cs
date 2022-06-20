@@ -1,20 +1,19 @@
-﻿namespace ATag.Tests
+namespace ATag.Tests;
+
+using ATag.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+
+public class DatabaseFixture
 {
-	using ATag.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore;
+	private readonly DbContextOptions options;
 
-	public class DatabaseFixture
+	public DatabaseFixture()
 	{
-		private readonly DbContextOptions options;
+		this.options = new DbContextOptionsBuilder().UseInMemoryDatabase("Db").Options;
+	}
 
-		public DatabaseFixture()
-		{
-			this.options = new DbContextOptionsBuilder().UseInMemoryDatabase("Db").Options;
-		}
-
-		public DataContext CreateDataContext()
-		{
-			return new DataContext(this.options);
-		}
+	public DataContext CreateDataContext()
+	{
+		return new DataContext(this.options);
 	}
 }

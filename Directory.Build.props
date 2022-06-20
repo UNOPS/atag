@@ -1,0 +1,12 @@
+<Project>
+
+    <PropertyGroup>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NoWarn>CS1591,CS8618,CS0618</NoWarn>
+    </PropertyGroup>
+
+</Project>
