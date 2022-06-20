@@ -1,4 +1,4 @@
-﻿namespace ATag.Core;
+namespace ATag.Core;
 
 public struct TagOwnerFilter
 {

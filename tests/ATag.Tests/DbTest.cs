@@ -1,4 +1,4 @@
-﻿namespace ATag.Tests;
+namespace ATag.Tests;
 
 using System.Linq;
 using ATag.Core;

@@ -1,4 +1,4 @@
-﻿namespace ATag.EntityFrameworkCore.DataAccess;
+namespace ATag.EntityFrameworkCore.DataAccess;
 
 using ATag.Core;
 using ATag.EntityFrameworkCore.Mappings;

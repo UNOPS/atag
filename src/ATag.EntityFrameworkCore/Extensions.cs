@@ -1,4 +1,4 @@
-﻿namespace ATag.EntityFrameworkCore;
+namespace ATag.EntityFrameworkCore;
 
 using ATag.Core;
 using LinqKit;

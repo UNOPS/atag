@@ -1,4 +1,4 @@
-﻿namespace ATag.Core;
+namespace ATag.Core;
 
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace ATag.EntityFrameworkCore.Mappings;
+namespace ATag.EntityFrameworkCore.Mappings;
 
 using ATag.Core;
 using Microsoft.EntityFrameworkCore;

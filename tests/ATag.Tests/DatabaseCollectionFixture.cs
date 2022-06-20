@@ -1,4 +1,4 @@
-﻿namespace ATag.Tests;
+namespace ATag.Tests;
 
 using Xunit;
 
