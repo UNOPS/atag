@@ -35,5 +35,6 @@ internal class TagsDbContext : DbContext
         builder.ApplyConfiguration(new TagMap(this.schema));
         builder.ApplyConfiguration(new TaggedEntityMap(this.schema));
         builder.ApplyConfiguration(new TagNoteMap(this.schema));
+        builder.ChangeTablesAndColumnsNamesToLowerCase();
     }
 }
